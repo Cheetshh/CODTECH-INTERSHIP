@@ -1,123 +1,41 @@
-# CODTECH-INTERSHIP
-#code for the password strength cheaker 
-import re
-import math
-import random
-import string
+NAME:DHEERAJ DONIKENA
 
-def check_password_strength(password):
-    # Initialize strength metrics
-    length_score = 0
-    complexity_score = 0
-    uniqueness_score = 0
-    
-    # Length check
-    length = len(password)
-    if length >= 8:
-        length_score = 1
-    if length >= 12:
-        length_score = 2
-    if length >= 16:
-        length_score = 3
+COMPANY:CODETECH IT SOLUTIONS PVT LTD
 
-    # Complexity check
-    character_set_size = 0
-    if re.search(r"[A-Z]", password):
-        complexity_score += 1
-        character_set_size += 26
-    if re.search(r"[a-z]", password):
-        complexity_score += 1
-        character_set_size += 26
-    if re.search(r"\d", password):
-        complexity_score += 1
-        character_set_size += 10
-    if re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
-        complexity_score += 1
-        character_set_size += 32
+ID:CT8CSEH1189
 
-    # Uniqueness check
-    if re.search(r"(.)\1\1", password):  # Check for triple repeated characters
-        uniqueness_score = -1
+DOAMIN:CYBER SECUIRTY
 
-    # Calculate total score
-    total_score = length_score + complexity_score + uniqueness_score
+DURATION:20 JUNE 2023 TO AUG 20 2023
 
-    # Determine strength level
-    if total_score >= 6:
-        strength = "Very Strong"
-    elif total_score >= 4:
-        strength = "Strong"
-    elif total_score >= 2:
-        strength = "Moderate"
-    else:
-        strength = "Weak"
+MENTOR:SANTHOSH KUMAR
 
-    # Provide feedback
-    feedback = []
-    if length_score == 0:
-        feedback.append("Increase the length of your password.")
-    if complexity_score < 4:
-        feedback.append("Include uppercase, lowercase, numbers, and special characters.")
-    if uniqueness_score == -1:
-        feedback.append("Avoid repeating characters in your password.")
-    
-    # Estimate cracking time
-    if character_set_size > 0:
-        num_combinations = math.pow(character_set_size, length)
-        cracking_speed = 1e9  # 1 billion attempts per second
-        time_to_crack_seconds = num_combinations / cracking_speed
+OVERVIEW OF PROJECT:### Theory and Technologies Used
 
-        # Convert time to human-readable format
-        if time_to_crack_seconds < 60:
-            time_to_crack = f"{time_to_crack_seconds:.2f} seconds"
-        elif time_to_crack_seconds < 3600:
-            time_to_crack = f"{time_to_crack_seconds / 60:.2f} minutes"
-        elif time_to_crack_seconds < 86400:
-            time_to_crack = f"{time_to_crack_seconds / 3600:.2f} hours"
-        elif time_to_crack_seconds < 31536000:
-            time_to_crack = f"{time_to_crack_seconds / 86400:.2f} days"
-        else:
-            time_to_crack = f"{time_to_crack_seconds / 31536000:.2f} years"
-    else:
-        time_to_crack = "N/A"
+#### **Theory**
 
-    return strength, feedback, time_to_crack
+1. **Password Strength Evaluation**:
+   - **Length Check**: Longer passwords are generally more secure. This check assigns a score based on the number of characters in the password, recognizing that increasing length improves security.
+   - **Complexity Check**: Passwords with a mix of uppercase letters, lowercase letters, digits, and special characters are harder to guess. Complexity is assessed by identifying the presence of these character types and adjusting the score accordingly.
+   - **Uniqueness Check**: Repeated characters within a password reduce its strength. The script penalizes passwords with characters repeated three or more times in a row.
+   - **Cracking Time Estimation**: Estimates how long it would take for a computer to brute-force the password. This estimation helps users understand the robustness of their password against automated attacks.
 
-def enhance_password(password):
-    # Capitalize the first letter
-    if not re.search(r"[A-Z]", password):
-        password = password.capitalize()
-    
-    # Add a special character if not already present
-    if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
-        password += random.choice("!@#$%^&*")
-    
-    # Ensure the password is at least 12 characters long
-    if len(password) < 12:
-        password += ''.join(random.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(12 - len(password)))
-    
-    # Shuffle the password to improve randomness while maintaining recognizability
-    password_list = list(password)
-    random.shuffle(password_list)
-    password = ''.join(password_list)
-    
-    # Ensure no consecutive characters are repeated more than twice
-    while re.search(r"(.)\1\1", password):
-        password_list = list(password)
-        random.shuffle(password_list)
-        password = ''.join(password_list)
+#### **Technologies Used**
 
-    return password
+1. **Python**:
+   - **Role**: Programming language used to write the script.
+   - **Function**: Handles logic for checking password length, complexity, uniqueness, and estimating cracking time.
 
-# Test the function
-password = input("Enter your password: ")
-strength, feedback, time_to_crack = check_password_strength(password)
+2. **Regular Expressions (`re` module)**:
+   - **Role**: Used for pattern matching within the password.
+   - **Function**: Identifies different character types and sequences (e.g., uppercase letters, digits, repeated characters).
 
-print(f"Password Strength: {strength}")
-for comment in feedback:
-    print(f"- {comment}")
-print(f"Estimated Time to Crack: {time_to_crack}")
+3. **Mathematics (`math` module)**:
+   - **Role**: Used for calculations.
+   - **Function**: Computes the number of possible password combinations and estimates cracking time based on character set size and password length.
 
-if strength in ["Weak", "Moderate"]:
-    suggested_password = enhance_password(password)
-    print("Suggested Strong Password: ", suggested_password)
+4. **Python Libraries**:
+   - **Regular Expressions Library (`re`)**: Facilitates complex pattern matching in strings.
+   - **Math Library (`math`)**: Provides mathematical functions necessary for calculating combinations and cracking time.
+
+This theory and technology combination provides a comprehensive method for evaluating and improving password strength by considering its length, complexity, and uniqueness, along with estimating potential cracking times.
